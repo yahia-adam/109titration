@@ -10,6 +10,9 @@
 
 ![image](https://user-images.githubusercontent.com/91891487/182253371-92060aa6-e66a-42f3-ae02-ec363935acfd.png)
 
+<h2> Instalation </h2>
+
+      git clone git@github.com:Yahia-Abdchafee-ADAM/109titration.git 
 
 <h2> Usage </h2>
 
