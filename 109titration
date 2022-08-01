@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+from sys import argv
+import help_titration
+import error_handling
+import csv
+import cal_derivation
+import calc_second_derivation
+import calc_second_derivate_estimated
+
+def titration(file):
+	derive = cal_derivation.cal_derivate(file)
+	equivalent_point = cal_derivation.equivalent_point(derive, file)
+	second_derive = calc_second_derivation.calc_second_derivative(derive, file)
+	calc_second_derivate_estimated.second_derivate_estimated(file, second_derive, equivalent_point)
+
+def read_file(argv):
+	file = []
+	try:
+		with open(argv[1]) as csv_file:
+			csv_data = list(csv.reader(csv_file, delimiter=';'))
+			try:
+				for i in range(len(csv_data)):
+					file.append(csv_data[i])
+					file[i][0] = float(csv_data[i][0])
+					file[i][1] = float(csv_data[i][1])
+					if not len(file[i]) == 2:
+						raise IndexError
+			except (ValueError, IndexError):
+				exit(84)
+	except (EnvironmentError) as err:
+		exit(84)
+	if len(file) <= 4:
+		exit(84)
+	return file
+
+if __name__ == "__main__":
+    ac = len(argv)
+    if ac == 2:
+        if argv[1] == "-h" or argv[1] == "--help":
+            help_titration.usage()
+            exit(0)
+    if error_handling.error(ac, argv) == -1:
+        exit(84)
+    titration(read_file(argv))
+    exit(0)
